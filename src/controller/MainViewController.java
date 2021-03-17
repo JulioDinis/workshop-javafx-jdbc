@@ -66,6 +66,12 @@ public class MainViewController implements Initializable {
     }
 
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
+    /**
+     * função parametrizada
+     * @param <T>
+     * @param absoluteName
+     * @param initialingAction 
+     */
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initialingAction) {
         try {
 
