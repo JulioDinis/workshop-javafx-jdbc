@@ -42,7 +42,7 @@ public class DepartmentFormController implements Initializable {
     }
 
     @FXML
-    public void onBtCancelAction() {
+    public void onBtCancelAction() { 
         System.out.println("onBtCancelAction");
     }
 
