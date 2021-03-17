@@ -10,6 +10,7 @@ import gui.DepartmentListController;
 import gui.util.Alerts;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -44,12 +45,16 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemDepartmentAction() {
-        loadView2("/gui/DepartmentList.fxml");
+        loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
+            controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
+        });
     }
 
     @FXML
     public void onMenuItemAboutAction() {
-        loadView("/gui/About.fxml");
+        loadView("/gui/About.fxml", x -> {
+        });
     }
 
     /**
@@ -61,7 +66,7 @@ public class MainViewController implements Initializable {
     }
 
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
-    private synchronized void loadView(String absoluteName) {
+    private synchronized <T> void loadView(String absoluteName, Consumer<T> initialingAction) {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -77,36 +82,39 @@ public class MainViewController implements Initializable {
             mainVbox.getChildren().add(mainMenu); // Adiciona o node da Barra de Menu
             mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
 
+            // executa a função que veio por parametro T
+            T controller = loader.getController();
+            initialingAction.accept(controller);
+
         } catch (Exception e) {
             Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
 
     }
 
-    private synchronized void loadView2(String absoluteName) {
-        try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-            VBox newVBox = loader.load();
-            // Carrega o Scene Principal
-            Scene mainScene = Main.getMainScene();
-            // Pega o VBox da classe principal onde será inserido os node
-            VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-
-            // Guarda o node da barra de menu
-            Node mainMenu = mainVbox.getChildren().get(0);
-            mainVbox.getChildren().clear(); //limpa o VBox da Main
-            mainVbox.getChildren().add(mainMenu); // Adiciona o node da Barra de Menu
-            mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
-
-            DepartmentListController controller = loader.getController();
-            controller.setDepartmentService(new DepartmentService());
-            controller.updateTableView();
-            
-        } catch (Exception e) {
-            Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-        }
-
-    }
-
+//    private synchronized void loadView2(String absoluteName) {
+//        try {
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+//            VBox newVBox = loader.load();
+//            // Carrega o Scene Principal
+//            Scene mainScene = Main.getMainScene();
+//            // Pega o VBox da classe principal onde será inserido os node
+//            VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+//
+//            // Guarda o node da barra de menu
+//            Node mainMenu = mainVbox.getChildren().get(0);
+//            mainVbox.getChildren().clear(); //limpa o VBox da Main
+//            mainVbox.getChildren().add(mainMenu); // Adiciona o node da Barra de Menu
+//            mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
+//
+//            DepartmentListController controller = loader.getController();
+//            controller.setDepartmentService(new DepartmentService());
+//            controller.updateTableView();
+//            
+//        } catch (Exception e) {
+//            Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+//        }
+//
+//    }
 }
