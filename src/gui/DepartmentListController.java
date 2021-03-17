@@ -6,6 +6,7 @@
 package gui;
 
 import application.Main;
+import gui.listener.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import java.net.URL;
@@ -34,7 +35,7 @@ import model.services.DepartmentService;
  *
  * @author julio
  */
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListener {
 
     private DepartmentService service;
 
@@ -99,8 +100,9 @@ public class DepartmentListController implements Initializable {
 
             DepartmentFormController controller = loader.getController();
             controller.setDepartment(department);
-            controller.updateFormData();
             controller.setDepartmentService(new DepartmentService());
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Enter Department Data");
@@ -114,6 +116,11 @@ public class DepartmentListController implements Initializable {
 
             Alerts.showAlert("IO Exeption", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChange() {
+        updateTableView();
     }
 
 }
