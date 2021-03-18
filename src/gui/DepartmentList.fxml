@@ -26,9 +26,10 @@
       </ToolBar>
       <TableView fx:id="tableViewDepartment" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="tableColumnName" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="134.0" />
+          <TableColumn fx:id="tableColumnId" prefWidth="49.0" text="ID" />
+          <TableColumn fx:id="tableColumnName" prefWidth="133.0" text="Name" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="102.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="110.0" />
         </columns>
       </TableView>
    </children>
