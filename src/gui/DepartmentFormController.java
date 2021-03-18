@@ -116,7 +116,12 @@ public class DepartmentFormController implements Initializable {
             throw new IllegalStateException("Entity was null");
         }
         txtId.setText(String.valueOf(entity.getId()));
-        txtName.setText(String.valueOf(entity.getName()));
+//        txtName.setText(String.valueOf(entity.getName()));
+        if (entity.getName() == null) {
+            txtName.setText("");
+        } else {
+            txtName.setText(String.valueOf(entity.getName()));
+        }
     }
 
     private Department getFormData() {
@@ -126,8 +131,9 @@ public class DepartmentFormController implements Initializable {
 
         obj.setId(Utils.tryParseToInt(txtId.getText()));
 
-        if (txtName.getText() == null | txtName.getText().trim().equals("")) {
+        if (txtName.getText() == null || txtName.getText().trim().equals("")) {
             exception.addError("name", "Field can't be empty");
+
         }
         obj.setName(txtName.getText());
 
