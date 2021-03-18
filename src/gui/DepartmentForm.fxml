@@ -27,8 +27,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Label" />
-            <Label text="Label" GridPane.rowIndex="1" />
+            <Label text="Id" />
+            <Label text="Name" GridPane.rowIndex="1" />
             <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="labelErroName" textFill="#ee0000" GridPane.columnIndex="2" GridPane.rowIndex="1" />
