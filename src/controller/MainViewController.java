@@ -7,6 +7,7 @@ package controller;
 
 import application.Main;
 import gui.DepartmentListController;
+import gui.SellerListController;
 import gui.util.Alerts;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
+import model.services.SellerService;
 
 /**
  * FXML Controller class
@@ -40,7 +42,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemSellerAction() {
-        System.out.println("onMenuItemSellerAction");
+        loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
+            controller.setSellerService(new SellerService());
+            controller.updateTableView();
+        });
     }
 
     @FXML
@@ -68,9 +73,10 @@ public class MainViewController implements Initializable {
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
     /**
      * função parametrizada
+     *
      * @param <T>
      * @param absoluteName
-     * @param initialingAction 
+     * @param initialingAction
      */
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initialingAction) {
         try {
