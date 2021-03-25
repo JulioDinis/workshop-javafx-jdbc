@@ -257,6 +257,7 @@ public class SellerFormController implements Initializable {
 
     private void initializeComboBoxDepartment() {
         Callback<ListView<Department>, ListCell<Department>> factory = lv -> new ListCell<Department>() {
+           
             @Override
             protected void updateItem(Department item, boolean empty) {
                 super.updateItem(item, empty);
